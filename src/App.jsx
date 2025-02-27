@@ -1,6 +1,6 @@
 import { useState, React } from "react";
 import Form from "./components/Form";
-import filmimg from "./assets/images/movie.svg";
+import filmimg from "./assets/images/Movie.svg";
 import favourite from "./assets/images/favourites.png";
 import tv from "./assets/images/tv.svg";
 import film from "./assets/images/film.png";
