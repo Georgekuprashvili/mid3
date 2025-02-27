@@ -65,7 +65,7 @@ function Form({ setVisibleApp }) {
       userData.password === data.password
     ) {
       setVisiblelogin(false);
-      setVisibleApp(true); 
+      setVisibleApp(true);
     } else {
       alert("მითითებული email ან password არასწორია");
     }
@@ -74,7 +74,7 @@ function Form({ setVisibleApp }) {
   return (
     <>
       {visiblelogin && (
-        <div className="w-full h-full flex justify-center gap-[83px] items-center flex-col">
+        <div className="w-full  h-[100%] flex justify-center gap-[83px] items-center flex-col">
           <img src={movieicon} alt="Movie icon" />
           {visiblesign && (
             <div className="max-w-[400px] w-[100%] h-[373px] rounded-[20px] bg-[#161D2F] p-[32px] flex flex-col gap-[30px]">
