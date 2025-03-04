@@ -36,6 +36,7 @@ function Form({ setVisibleApp }) {
   const [visiblesign, setVisiblesign] = useState(true);
   const [visibleregister, setVisibleregister] = useState(false);
   const [visiblelogin, setVisiblelogin] = useState(true);
+  const [loginError, setLoginError] = useState("");
 
   const {
     register,
@@ -67,7 +68,7 @@ function Form({ setVisibleApp }) {
       setVisiblelogin(false);
       setVisibleApp(true);
     } else {
-      alert("მითითებული email ან password არასწორია");
+      setLoginError("მითითებული email ან password არასწორია");
     }
   };
 
@@ -100,6 +101,11 @@ function Form({ setVisibleApp }) {
                       </span>
                     )}
                   </div>
+                  {loginError && (
+                    <p style={{ color: "red", fontSize: "14px" }}>
+                      {loginError}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex flex-col gap-1.5">

@@ -16,7 +16,6 @@ button {
 }
 
 p {
-  color: var(--Pure-White, #fff);
   font-feature-settings: "liga" off, "clig" off;
   font-family: Outfit;
   font-size: 13px;
@@ -24,7 +23,4 @@ p {
   font-weight: 400;
   line-height: normal;
   opacity: 0.75;
-}
-.swiper-wrapper {
-  width: 600px;
 }

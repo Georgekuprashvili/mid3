@@ -4,7 +4,6 @@ import filmimg from "./assets/images/Movie.svg";
 import favourite from "./assets/images/favourites.png";
 import tv from "./assets/images/tv.svg";
 import film from "./assets/images/film.png";
-import all from "./assets/images/all.png";
 import profileimg from "./assets/images/profile.png";
 import search from "./assets/images/search.svg";
 import data from "./data.json";
@@ -13,8 +12,11 @@ import start from "./assets/images/start.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import save from "./assets/images/save.svg";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import All from "./components/svg/all";
+import Filmsvg from "./components/svg/Filmsvg";
+import TVsvg from "./components/svg/TVsvg";
+import Favourite from "./components/svg/Favourite";
+import Favouritesecond from "./components/svg/Facouritesecond";
 
 function App() {
   const [visibleApp, setVisibleApp] = useState(false);
@@ -54,35 +56,31 @@ function App() {
             <img src={filmimg} />
             <div className="flex flex-col gap-[45px] h-[200px] mt-[77px]">
               <button onClick={() => setSelectedCategory("all")}>
-                <img
+                <All
                   onClick={() => {
                     setActiveslider(true);
                   }}
-                  src={all}
                 />
               </button>
               <button onClick={() => setSelectedCategory("Movie")}>
-                <img
+                <Filmsvg
                   onClick={() => {
                     setActiveslider(false);
                   }}
-                  src={film}
                 />
               </button>
               <button onClick={() => setSelectedCategory("TV Series")}>
-                <img
+                <TVsvg
                   onClick={() => {
                     setActiveslider(false);
                   }}
-                  src={tv}
                 />
               </button>
               <button>
-                <img
+                <Favourite
                   onClick={() => {
                     setActiveslider(false);
                   }}
-                  src={favourite}
                 />
               </button>
             </div>
@@ -110,12 +108,7 @@ function App() {
                 <h1 className="text-white font-outfit text-[32px] font-normal leading-normal tracking-[-0.5px]">
                   Trending
                 </h1>
-                <Swiper
-                  spaceBetween={10}
-                  slidesPerView={3}
-                  loop={true}
-                  className="h-[250px]"
-                >
+                <Swiper spaceBetween={10} slidesPerView={3} loop={true}>
                   {data
                     .filter((movie) => movie.isTrending)
                     .map((movie, index) => (
@@ -130,7 +123,7 @@ function App() {
                             onClick={() => {
                               setPlay(true);
                             }}
-                            className="rounded-[8px] max-w-[460px] w-[100%]"
+                            className="rounded-[8px] max-w-[470px] w-[100%] "
                             src={movie.thumbnail.trending.large}
                             alt={movie.title}
                           />
@@ -141,13 +134,16 @@ function App() {
                             <h2 className="text-lg font-bold">{movie.title}</h2>
                           </div>
                           {play && (
-                            <div className="absolute w-[117px] h-[48px] rounded-[28.5px] flex gap-[20px] bg-gray-300 items-center justify-center left-[155px] top-[94px]">
+                            <div className="absolute max-w-[117px] w-[100%] h-[48px] rounded-[28.5px] flex gap-[20px] bg-gray-300 items-center justify-center left-[155px] top-[94px]">
                               <img src={start} />
                               <p className="text-[ #FFF] font-outfit text-[18px] font-normal leading-normal">
                                 Play
                               </p>
                             </div>
                           )}
+                          <button className=" absolute top-[11px] right-[40px]">
+                            <Favouritesecond />
+                          </button>
                         </div>
                       </SwiperSlide>
                     ))}
@@ -174,11 +170,8 @@ function App() {
                           src={movie.thumbnail.regular.small}
                           alt={movie.title}
                         />
-                        <button>
-                          <img
-                            className=" absolute top-[11px] right-[17px]"
-                            src={save}
-                          />
+                        <button className=" absolute top-[11px] right-[17px]">
+                          <Favouritesecond />
                         </button>
                       </div>
                       <div className="flex w-[156px] justify-between items-center mt-[10px]">
