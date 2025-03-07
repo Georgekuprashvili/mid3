@@ -24,3 +24,7 @@ p {
   line-height: normal;
   opacity: 0.75;
 }
+@theme {
+  --breakpoint-first: 1135px;
+  --breakpoint-second: 550px;
+}

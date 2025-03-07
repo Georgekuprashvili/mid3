@@ -1,7 +1,7 @@
-import { useState, React } from "react";
+import { useState } from "react";
+import "./App.css";
 import Form from "./components/Form";
 import filmimg from "./assets/images/Movie.svg";
-import favourite from "./assets/images/favourites.png";
 import tv from "./assets/images/tv.svg";
 import film from "./assets/images/film.png";
 import profileimg from "./assets/images/profile.png";
@@ -10,13 +10,12 @@ import data from "./data.json";
 import oval from "./assets/images/Oval Copy.svg";
 import start from "./assets/images/start.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import save from "./assets/images/save.svg";
 import "swiper/css";
 import All from "./components/svg/all";
 import Filmsvg from "./components/svg/Filmsvg";
 import TVsvg from "./components/svg/TVsvg";
-import Favourite from "./components/svg/Favourite";
 import Favouritesecond from "./components/svg/Facouritesecond";
+import Favourite from "./components/svg/Favourite";
 
 function App() {
   const [visibleApp, setVisibleApp] = useState(false);
@@ -25,8 +24,18 @@ function App() {
   const [play, setPlay] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [activeslider, setActiveslider] = useState(true);
+
   const noneslider = () => {
     setActiveslider(false);
+  };
+
+  const Bookmark = (movie) => {
+    const updatedMovies = filteredMovies.map((item) =>
+      item.title === movie.title
+        ? { ...item, isBookmarked: !item.isBookmarked }
+        : item
+    );
+    setFilteredMovies(updatedMovies);
   };
 
   const handleSearch = () => {
@@ -46,45 +55,58 @@ function App() {
     return movie.category === selectedCategory;
   });
 
+  const filteredBookmarkedMovies = filteredMovies.filter(
+    (movie) => movie.isBookmarked
+  );
+
+  const displayMovies =
+    selectedCategory === "favorites"
+      ? filteredBookmarkedMovies
+      : filteredCategoryMovies;
+
   return (
     <>
       {!visibleApp ? (
         <Form setVisibleApp={setVisibleApp} />
       ) : (
-        <div className="flex p-[30px] w-[100%] h-[auto] gap-[36px]">
-          <div className="w-[96px] h-[100%] bg-[#161D2F] rounded-2xl flex items-center flex-col p-[32px]">
+        <div className="flex p-[30px] w-[100%] h-[auto] gap-[50px] max-first:flex-col max-second:p-[0]">
+          <div className="w-[96px] h-[100%] bg-[#161D2F] rounded-2xl flex items-center flex-col p-[32px] max-first:w-[100%] max-first:h-[72px] max-first:flex-row justify-between">
             <img src={filmimg} />
-            <div className="flex flex-col gap-[45px] h-[200px] mt-[77px]">
-              <button onClick={() => setSelectedCategory("all")}>
-                <All
-                  onClick={() => {
-                    setActiveslider(true);
-                  }}
-                />
+            <div className="flex flex-col gap-[45px] h-[200px] mt-[77px] max-first:flex-row max-first:mt-[0px] max-first:w-[179px] max-first:h-[20px] max-second:w-[133px] justify-around max-second:gap-0">
+              <button
+                onClick={() => {
+                  setSelectedCategory("all");
+                  setActiveslider(true);
+                }}
+              >
+                <All />
               </button>
-              <button onClick={() => setSelectedCategory("Movie")}>
-                <Filmsvg
-                  onClick={() => {
-                    setActiveslider(false);
-                  }}
-                />
+              <button
+                onClick={() => {
+                  setSelectedCategory("Movie");
+                  noneslider();
+                }}
+              >
+                <Filmsvg />
               </button>
-              <button onClick={() => setSelectedCategory("TV Series")}>
-                <TVsvg
-                  onClick={() => {
-                    setActiveslider(false);
-                  }}
-                />
+              <button
+                onClick={() => {
+                  setSelectedCategory("TV Series");
+                  noneslider();
+                }}
+              >
+                <TVsvg />
               </button>
-              <button>
-                <Favourite
-                  onClick={() => {
-                    setActiveslider(false);
-                  }}
-                />
+              <button
+                onClick={() => {
+                  setSelectedCategory("favorites");
+                  noneslider();
+                }}
+              >
+                <Favourite />
               </button>
             </div>
-            <div className="mt-[450px]">
+            <div className="mt-[450px] max-first:mt-[0px]">
               <img src={profileimg} />
             </div>
           </div>
@@ -120,9 +142,6 @@ function App() {
                           className="relative cursor-pointer"
                         >
                           <img
-                            onClick={() => {
-                              setPlay(true);
-                            }}
                             className="rounded-[8px] max-w-[470px] w-[100%] "
                             src={movie.thumbnail.trending.large}
                             alt={movie.title}
@@ -141,8 +160,11 @@ function App() {
                               </p>
                             </div>
                           )}
-                          <button className=" absolute top-[11px] right-[40px]">
-                            <Favouritesecond />
+                          <button className="absolute top-[11px] right-[40px]">
+                            <Favouritesecond
+                              movie={movie}
+                              Bookmark={Bookmark}
+                            />
                           </button>
                         </div>
                       </SwiperSlide>
@@ -158,20 +180,19 @@ function App() {
                   : selectedCategory}
               </h1>
               <div className="flex flex-wrap gap-[50px]">
-                {filteredCategoryMovies.length > 0 ? (
-                  filteredCategoryMovies.map((movie, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col  w-[330px] h-[255px]"
-                    >
-                      <div className=" relative">
-                        <img
-                          className="rounded-[8px]"
-                          src={movie.thumbnail.regular.small}
-                          alt={movie.title}
-                        />
-                        <button className=" absolute top-[11px] right-[17px]">
-                          <Favouritesecond />
+                {displayMovies.length > 0 ? (
+                  displayMovies.map((movie, index) => (
+                    <div key={index} className="flex flex-col">
+                      <div className="relative">
+                        <div className="w-[280px] h-[185px]">
+                          <img
+                            className="rounded-[8px] w-[100%] h-[100%]"
+                            src={movie.thumbnail.regular.small}
+                            alt={movie.title}
+                          />
+                        </div>
+                        <button className="absolute top-[11px] right-[17px]">
+                          <Favouritesecond movie={movie} Bookmark={Bookmark} />
                         </button>
                       </div>
                       <div className="flex w-[156px] justify-between items-center mt-[10px]">
