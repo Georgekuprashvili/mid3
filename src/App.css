@@ -10,6 +10,7 @@
   height: 100vh;
   background-color: #10141e;
   overflow: auto;
+  overflow-x: hidden;
 }
 button {
   cursor: pointer;
@@ -25,6 +26,7 @@ p {
   opacity: 0.75;
 }
 @theme {
+  --breakpoint-one: 1345px;
   --breakpoint-first: 1135px;
   --breakpoint-second: 550px;
 }
