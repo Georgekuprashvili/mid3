@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 import movieicon from "../assets/images/Movie.svg";
 import { useForm } from "react-hook-form";
@@ -49,6 +49,14 @@ function Form({ setVisibleApp }) {
     handleSubmit: handleSubmitLogin,
     formState: { errors: errorsLogin },
   } = useForm({ resolver: yupResolver(schemaLogin) });
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setVisiblelogin(false);
+      setVisibleApp(true);
+    }
+  }, [setVisibleApp]);
 
   const onSubmitRegister = (data) => {
     if (isValid) {
